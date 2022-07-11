@@ -1,0 +1,25 @@
+{
+    "name": "vkolegov/dolyame-api-php",
+    "description": "Tinkoff dolyame service API client https://dolyame.ru/",
+    "type": "library",
+    "require": {
+        "php": "^7.4 | ^8.0",
+        "guzzlehttp/guzzle": "^6.0",
+        "ramsey/uuid": "^4.0",
+      "ext-json": "*"
+    },
+    "license": "Apache-2.0",
+    "autoload": {
+        "psr-4": {
+            "VKolegov\\DolyameAPI\\": "./src"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vladislav Kolegov",
+            "email": "v.kolegov@outlook.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
