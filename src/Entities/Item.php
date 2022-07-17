@@ -46,6 +46,20 @@ class Item implements Arrayable
         return $item;
     }
 
+    public function setName(string $name): Item
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param int $quantity
+     */
+    public function setQuantity(int $quantity): void
+    {
+        $this->quantity = $quantity;
+    }
+
     /**
      * @param string|null $sku
      * @return Item
@@ -64,6 +78,38 @@ class Item implements Arrayable
     {
         $this->receipt = $receipt;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSku(): ?string
+    {
+        return $this->sku;
     }
 
     /**
