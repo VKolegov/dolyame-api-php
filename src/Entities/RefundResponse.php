@@ -2,7 +2,9 @@
 
 namespace VKolegov\DolyameAPI\Entities;
 
-class RefundResponse
+use VKolegov\DolyameAPI\Contracts\Arrayable;
+
+class RefundResponse implements Arrayable
 {
     private float $amount;
     private string $id;
@@ -37,5 +39,13 @@ class RefundResponse
     public function getAmount(): float
     {
         return $this->amount;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'amount' => $this->getAmount(),
+            'refund_id' => $this->getId(),
+        ];
     }
 }
