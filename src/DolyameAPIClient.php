@@ -9,9 +9,11 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
 use Ramsey\Uuid\UuidFactory;
 use VKolegov\DolyameAPI\Entities\OrderInfo;
+use VKolegov\DolyameAPI\Entities\RefundResponse;
 use VKolegov\DolyameAPI\Exceptions\DolyameRequestException;
 use VKolegov\DolyameAPI\Requests\CommitOrderRequest;
 use VKolegov\DolyameAPI\Requests\CreateOrderRequest;
+use VKolegov\DolyameAPI\Requests\RefundRequest;
 
 class DolyameAPIClient
 {
@@ -140,6 +142,8 @@ class DolyameAPIClient
     }
 
     /**
+     * Метод создания заказа
+     * https://dolyame.ru/develop/help/api/?method=create
      * @param \VKolegov\DolyameAPI\Requests\CreateOrderRequest $request
      * @return \VKolegov\DolyameAPI\Entities\OrderInfo
      * @throws \VKolegov\DolyameAPI\Exceptions\DolyameRequestException
@@ -155,6 +159,8 @@ class DolyameAPIClient
     }
 
     /**
+     * Метод для подтверждения заказа
+     * https://dolyame.ru/develop/help/api/?method=commit
      * @param \VKolegov\DolyameAPI\Requests\CommitOrderRequest $request
      * @return \VKolegov\DolyameAPI\Entities\OrderInfo
      * @throws \VKolegov\DolyameAPI\Exceptions\DolyameRequestException
@@ -171,6 +177,8 @@ class DolyameAPIClient
     }
 
     /**
+     * Метод для отмены заказа
+     * https://dolyame.ru/develop/help/api/?method=cancel
      * @param string $id
      * @return \VKolegov\DolyameAPI\Entities\OrderInfo
      * @throws \VKolegov\DolyameAPI\Exceptions\DolyameRequestException
@@ -186,6 +194,8 @@ class DolyameAPIClient
     }
 
     /**
+     * Метод получения актуальной информации по заказу
+     * https://dolyame.ru/develop/help/api/?method=info
      * @param string $id
      * @return \VKolegov\DolyameAPI\Entities\OrderInfo
      * @throws \VKolegov\DolyameAPI\Exceptions\DolyameRequestException
@@ -198,5 +208,23 @@ class DolyameAPIClient
         $responseBodyJSON = json_decode($responseBody, true);
 
         return OrderInfo::fromArray($responseBodyJSON);
+    }
+
+    /**
+     * Метод для совершения возврата по заказу
+     * https://dolyame.ru/develop/help/api/?method=refund
+     * @param \VKolegov\DolyameAPI\Requests\RefundRequest $request
+     * @return \VKolegov\DolyameAPI\Entities\RefundResponse
+     * @throws \VKolegov\DolyameAPI\Exceptions\DolyameRequestException
+     */
+    public function refund(RefundRequest $request): RefundResponse
+    {
+        $id = $request->getId();
+        $response = $this->makePostRequest("orders/$id/refund", $request->toArray());
+
+        $responseBody = $response->getBody()->getContents();
+        $responseBodyJSON = json_decode($responseBody, true);
+
+        return RefundResponse::fromArray($responseBodyJSON);
     }
 }
